@@ -3,12 +3,14 @@
 namespace Database\Seeders;
 
 use App\Models\DiseaseHandbook;
+use App\Models\Patient;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Factories\DiseaseHandbookFactory;
-use Database\Factories\DoctorVisitFactory;
+use Database\Factories\PatientUserFactory;
 use Database\Factories\PatientFactory;
 use Database\Factories\UserFactory;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,7 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'Test User',
@@ -27,12 +28,25 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        UserFactory::new()->count(10)->create();
+
 
         DiseaseHandbookFactory::new()->count(10)->create();
 
         PatientFactory::new()->count(50)->create();
 
-        DoctorVisitFactory::new()->count(100)->create();
+        $user = UserFactory::new()
+            ->count(10)
+            ->create();
+
+        foreach (Patient::all() as $patient) {
+            $faker = Factory::create();
+            $user = User::query()->inRandomOrder()->value('id');
+            $patient->users()->attach($user, [
+                'date' => $faker->dateTimeBetween('+0 days', '+1 month'),
+                'weight' => $faker->randomFloat(0, 1, 10),
+                'temperature' => $faker->randomFloat(0, 1, 10),
+                'well_being' => $faker->randomFloat(0, 1, 10),
+            ]);
+        }
     }
 }

@@ -14,10 +14,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctor_visits', function (Blueprint $table) {
+        Schema::create('patient_user', function (Blueprint $table) {
             $table->id();
-
-            $table->date('date');
 
             $table->foreignIdFor(User::class)
                 ->constrained()
@@ -29,19 +27,13 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
+            $table->date('date');
+
             $table->integer('weight');
 
             $table->integer('temperature');
 
             $table->integer('well_being');
-
-            $table->foreignIdFor(DiseaseHandbook::class)
-                ->nullable()
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->boolean('disease_status');
 
             $table->timestamps();
         });
