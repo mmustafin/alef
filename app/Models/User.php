@@ -51,7 +51,8 @@ class User extends Authenticatable
 
     public function patients(): BelongsToMany
     {
-        return $this->belongsToMany(Patient::class);
+        return $this->belongsToMany(Patient::class)
+            ->withPivot(['date', 'weight', 'temperature', 'well_being']);
     }
 
 }

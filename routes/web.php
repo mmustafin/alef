@@ -1,10 +1,25 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Patient;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+
+    $doctor = User::query()
+        ->where('role', '=', 'doctor')
+        ->first();
+
+//    Auth::guard('web')->loginUsingId($doctor->id);
+
+
+
+    $patients = $doctor->patients()->orderBy('date', 'asc')->get();
+
+
+    return view('welcome', compact('doctor', 'patients'));
 });
 
 Route::get('/dashboard', function () {
