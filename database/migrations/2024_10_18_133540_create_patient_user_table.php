@@ -29,11 +29,11 @@ return new class extends Migration
 
             $table->date('date');
 
-            $table->integer('weight');
+            $table->integer('weight')->nullable();
 
-            $table->integer('temperature');
+            $table->integer('temperature')->nullable();
 
-            $table->integer('well_being');
+            $table->integer('well_being')->nullable();
 
             $table->timestamps();
         });

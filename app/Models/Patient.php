@@ -19,6 +19,7 @@ class Patient extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+            ->withPivot(['date', 'weight', 'temperature', 'well_being']);
     }
 }

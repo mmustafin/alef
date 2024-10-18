@@ -38,15 +38,29 @@ class DatabaseSeeder extends Seeder
             ->count(10)
             ->create();
 
-        foreach (Patient::all() as $patient) {
-            $faker = Factory::create();
-            $user = User::query()->inRandomOrder()->value('id');
-            $patient->users()->attach($user, [
-                'date' => $faker->dateTimeBetween('+0 days', '+1 month'),
-                'weight' => $faker->randomFloat(0, 1, 10),
-                'temperature' => $faker->randomFloat(0, 1, 10),
-                'well_being' => $faker->randomFloat(0, 1, 10),
-            ]);
-        }
+        PatientUserFactory::new()->count(1000)->create();
+
+
+//        foreach (Patient::all() as $patient) {
+//            $faker = Factory::create();
+//            $user = User::query()->inRandomOrder()->value('id');
+//
+//            $patient->users()->attach($user, [
+//                'date' => $faker->dateTimeBetween('-10 days', '+0 days'),
+//                'weight' => $faker->randomFloat(0, 1, 10),
+//                'temperature' => $faker->randomFloat(0, 1, 10),
+//                'well_being' => $faker->randomFloat(0, 1, 10),
+//            ]);
+//        }
+//
+//        foreach (Patient::all() as $patient) {
+//            $faker = Factory::create();
+//            $user = User::query()->inRandomOrder()->value('id');
+//            $patient->users()->attach($user, [
+//                'date' => $faker->dateTimeBetween('+0 days', '+1 month')
+//            ]);
+//        }
+
+
     }
 }

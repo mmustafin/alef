@@ -18,8 +18,10 @@ Route::get('/', function () {
 
     $patients = $doctor->patients()->orderBy('date', 'asc')->get();
 
+    $patient = Patient::query()->first();
+    $patient = $patient->users()->orderBy('date', 'asc')->get();
 
-    return view('welcome', compact('doctor', 'patients'));
+    return view('welcome', compact('doctor', 'patients', 'patient'));
 });
 
 Route::get('/dashboard', function () {
